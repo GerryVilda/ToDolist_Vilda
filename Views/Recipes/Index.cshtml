@@ -1,0 +1,54 @@
+﻿@model IEnumerable<ToDolist_Vilda.Models.Recipe>
+
+@{
+    ViewData["Title"] = "Recipes";
+}
+
+<h1 class="mb-3">Recipes</h1>
+
+<a asp-action="Create" class="btn btn-primary mb-3">+ Add Recipe</a>
+
+<table class="table table-bordered table-striped">
+    <thead class="table-dark">
+        <tr>
+            <th>Title</th>
+            <th>Instructions</th>
+            <th>Ingredients</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null && Model.Any())
+        {
+            foreach (var recipe in Model)
+            {
+                <tr>
+                    <td>@recipe.RecipeTitle?.TitleName</td>
+                    <td>@recipe.Instructions</td>
+                    <td>
+                        @if (recipe.Ingredients != null && recipe.Ingredients.Any())
+                        {
+                            <ul class="mb-0">
+                                @foreach (var ingredient in recipe.Ingredients)
+                                {
+                                    <li>
+                                        @ingredient.Measure @ingredient.UnitOfMeasure - @ingredient.Name
+                                    </li>
+                                }
+                            </ul>
+                        }
+                        else
+                        {
+                            <span class="text-muted">No ingredients</span>
+                        }
+                    </td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="3" class="text-center text-muted">No recipes found.</td>
+            </tr>
+        }
+    </tbody>
+</table>
